@@ -1,0 +1,124 @@
+You can install rustup from here curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+If you want to update rustc, use the command rustup. Install it if it doesn't exist.
+Because apt usually lags behind on versions, the command above is the best 
+for getting the latest version of Rust. 
+
+To create a permanent alias, go to ~/.bashrc and paste the alias code there, 
+like alias duck="nano lite.duckduckgo.com/lite".
+
+_____________
+
+Helix editor:
+
+- Enabling syntax highlighting: hx --grammar fetch; hx --grammar build
+- Getting syntax suggestions for a specific language: https://github.com/helix-editor/helix/wiki/Language-Server-Configurations
+
+- Sample adding something to bash: echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc; source ~/.bashrc
+- Editing the bottom bar, add this to config.toml in /.config/helix: [editor.statusline]; right = ["diagnostics", "selections", "position", "file-type", "file-encoding"]
+
+- Helix docs: https://docs.helix-editor.com/master/languages.html
+
+-------------
+
+Fresh code editor:
+- Source code: https://github.com/sinelaw/fresh
+- Install command: curl -fsSL https://raw.githubusercontent.com/sinelaw/fresh/refs/heads/master/scripts/install.sh | sh
+
+- You can't do this, you will have to compile it yourself 
+- Use cargo and have the latest version of rustc
+
+Lightening up a rust compilation
+
+CARGO_BUILD_JOBS=1 \
+CARGO_PROFILE_RELEASE_LTO=false \
+CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16 \
+CARGO_PROFILE_RELEASE_DEBUG=0 \
+cargo build --release
+
+  - LTO is something random that increases usage
+  - Codegen units split work into smaller chunks
+  - Debug removed
+
+Environment Variables
+
+  - printenv to access
+
+Ex:
+
+MY_VAR="hello"
+export MY_VAR
+
+or
+
+export MY_VAR=value command
+
+_____________
+
+Jobs
+
+A job is any process that is managed by the CURRENT shell session. "jobs" shows all jobs.
+
+To pause a process that is running do ctrl z.
+To move a process to the background use bg %1 (or your job id).
+Add an & to any command to run it in the background.
+
+To kill a job do kill -9 1 (or job id)
+
+To bring it back do fg 1 (or job id)
+
+To find a process use pgrep -fl
+
+____________
+
+Output to file
+
+command > combined.txt 2>&1
+2>&1 puts both inputs and outputs
+
+According to copilot: command > output.txt 2>&1 &
+  - Example: cargo build -j 2 > ~/Downloads/fresh.txt 2>&1 
+____________
+
+Tmux Guide
+
+To start a new tmux window, just type tmux.
+To deattach the current winodw tmux detach-session
+To kill a session do tmux kill-session 
+To attach a specific session do tmux attach -t 0 (or the number.
+To turn mouse on do tmux set -g mouse on
+
+According to copilot: tmux new -s mysession 
+
+Split Screen 
+
+tmux split-window -h or -v
+tmux select-pane -L -R -U -D for navigating between panes
+tmux select-pane -t 0 for selecting a specific pane
+___________
+
+General
+
+- For nslookup install dnsutils
+- For folder/file size calculations use du -h
+  - Du returns file sizes in bytes
+  - 1 kilobyte returns 1K
+  - 1 megabyte returns 1M
+  - 1 gigabyte probably returns 1B
+
+- For sorting through output use the sort command, like top | sort -n or something
+- Head or tail with -n 5 parameter for first 5 or last 5
+- ${string:start:length} for string slicing, for example ${"awef":1:5}
+- For arrays you can do like arr[0]
+
+- To force angband to use the terminal to run do: /usr/games/angband -mgcu
+
+- For ssh if you want to specify a key to use do ssh -i "path/to/key"
+___________
+
+Variables
+
+- Define like python, name = 5
+- To reference, do $name, like echo("$name")
+
+- To output to variables, do like vers = $(cargo --version)
+- You can also insert into strings easily, like echo "Using version $vers of Cargo"

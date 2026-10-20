@@ -1,0 +1,38 @@
+Remember, when connecting to a git repository, do git init in the folder 
+you are going to put it in, then do git remote add origin link.
+
+Remember to "git config --global user.email """ and same for 
+name.
+
+If you want to see the remote origin link, do git remote -v.
+
+If git complains and says it doesnt know the upstream branch, that means that
+git doesn't know what branch on GitHub to push onto. Follow the instructions
+to fix.
+
+SSH
+
+Visit https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
+First, generate an ssh key by "ssh-keygen -t rsa -b 4096 -C "email"".
+Store it in the default file. Look up passphrase to see how it works if
+you need it to be more secure.
+
+Start the ssh agent by "eval "$(ssh-agent -s)". Add your key to the agent by
+typing "ssh-add ~/.ssh/private_key". Yes ChatGPT will lie to you, you really
+have to use the agent.
+
+Retrieve the public key by cat filename.pub. Go to your github account and
+add a new key (I'm sure you can do that).
+
+Once you have done that, test your connections by "ssh -T git@github.com".
+Make sure you added the public key to your account.
+
+Now when you git push, git shouldn't ask you for an account password. If
+it does, make sure the remote origin is pointed to the ssh link, not the
+HTTPS link.
+
+NORMAL
+If your computer is not sped like mine, just set the remote origin to the
+HTTPS link and it will open a webpage that authenticates you. 
+

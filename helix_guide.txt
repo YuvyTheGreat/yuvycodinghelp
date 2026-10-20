@@ -1,0 +1,47 @@
+HELIX SETUP CHECKLIST
+
+Note: Claude made this, and you really do not have to follow any of these steps, only use this if any problems are encountered.
+
+1. Install build tools first (a missing compiler caused the 0-byte python.so):
+   sudo apt install build-essential git
+
+2. Install a current Helix from github.com/helix-editor/helix/releases (aarch64 build for a Pi). Keep its runtime folder next to hx.
+
+3. Fix PATH before installing servers:
+   echo 'export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"' >> ~/.bashrc
+   mkdir -p ~/.npm-global
+   npm config set prefix ~/.npm-global
+   source ~/.bashrc
+
+4. Install language servers:
+   pip install --user python-lsp-server --break-system-packages
+   npm i -g vscode-langservers-extracted
+
+5. Build grammars and check for failures:
+   hx --grammar fetch
+   hx --grammar build 2>&1 | tail -30
+   find ~/.config/helix/runtime/grammars -name '*.so' -size 0
+   (The find should print nothing. Any file it lists failed to build.)
+
+6. Write ~/.config/helix/config.toml, with theme first, above any [section]:
+   theme = "onedark"
+
+   [editor]
+   true-color = true
+
+   [editor.statusline]
+   right = ["diagnostics", "selections", "position", "file-type", "file-encoding"]
+
+7. If you use tmux, add to ~/.tmux.conf:
+   set -g default-terminal "tmux-256color"
+   set -ga terminal-overrides ",*:Tc"
+
+8. Verify:
+   hx --health python
+   Language server, Tree-sitter parser, and queries should all show a check mark.
+
+TIP: To avoid PATH problems, point languages.toml at the full path of pylsp:
+   [language-server.pylsp]
+   command = "/home/yuvythegreat/.local/bin/pylsp"
+
+If you'd like this saved as a .txt file you can keep on the Pi, I can make one.

@@ -1,0 +1,32 @@
+If you want to work on a new feature, then you create a branch.
+Do this by "git switch -c new-feature", which creats a new branch
+and sets it to it. 
+
+To sync this branch to GitHub do "git push -u origin new-feature", which
+creates a new branch on github. If you do "git push origin HEAD", 
+it does the same thing but doesn't track which local branch goes with
+which remote branch.
+
+See which branch you are on by git branch. Active one has * next to it.
+After changing the files in one branch, if you switch back to the main
+branch git will automatically remove anything new you added in the branch.
+
+This lets you have two different versions of a project without haveing
+two different folders.
+
+If you want to push a specific branch to GitHub you have to switch to it 
+first. Like "git switch featurebranch / git pull".
+
+Switch branches by "git switch branchname".
+
+To merge a branch to main, you do:
+git switch main
+git pull
+git merge feature
+git push
+
+Conceptual Info
+
+HEAD is Git's name for where you are right now in the repo.
+Origin is the nickname Git gives to the remote repository
+This also syncs to GitHub.
