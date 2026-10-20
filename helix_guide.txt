@@ -44,4 +44,3 @@ TIP: To avoid PATH problems, point languages.toml at the full path of pylsp:
    [language-server.pylsp]
    command = "/home/yuvythegreat/.local/bin/pylsp"
 
-If you'd like this saved as a .txt file you can keep on the Pi, I can make one.
